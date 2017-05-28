@@ -20,6 +20,35 @@ var th_consonant_braille = {
   ง:'\u283b',
 };
 
+/*
+"อะ","อา","อิ","อี",
+"อึ","อื","อุ","อู",
+"เอะ","เอ","แอะ","แอ",
+"เอียะ","เอีย","เอือะ","เอือ",
+"อัวะ","อัว","โอะ","โอ",
+"เอาะ","ออ","เออะ","เออ",
+"อำ","ใอ","ไอ","เอา",
+"ฤ","ฤๅ","ฦ","ฦๅ"
+*/
+
+var th_vowel_braille = {
+
+};
+
+/*
+*/
+
+var th_tone_braille = {
+
+};
+
+/*
+*/
+
+var number_brailler = {
+
+};
+
 module.exports = {
   getConsonantDict:function(){
     return th_consonant_braille;
