@@ -11,4 +11,4 @@ Demo: https://auycro.github.io/th-brailler-js/
 
 License: MIT
 
-(this repo styles is inspired by [this](https://github.com/marissamarym/chromaconator-js))
+(this repo is inspired by [this](https://github.com/marissamarym/chromaconator-js))
