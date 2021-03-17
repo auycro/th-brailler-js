@@ -10,3 +10,5 @@ Load index.html into your browser to see a simple demo.
 Demo: https://auycro.github.io/th-brailler-js/
 
 License: MIT
+
+(this repo styles is inspired by [this](https://github.com/marissamarym/chromaconator-js))
