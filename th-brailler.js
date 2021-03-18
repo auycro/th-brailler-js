@@ -9,7 +9,12 @@
 "ล","ว","ศ","ษ","ส",
 "ห","ฬ","อ","ฮ"
 */
-const lookupMap = {' ': "<br/>"};
+const lookupMap = {
+  ' ': "<br/>",
+  '\n': "<br/>",
+  '\r\n': "<br/>",
+  '\t': "<br/>",
+};
 
 const th_consonant_braille = {
   ก: '\u281b',
@@ -70,21 +75,50 @@ const th_consonant_braille = {
 */
 
 const th_vowel_braille = {
-  ะ:'a',
+  'ะ': '\u2801',
+  'ั': '\u281c',
+  'า': '\u2821',
+  'ิ': '\u2803',
+  'ี': '\u2806',
+  'ึ': '\u282a',
+  'ื': '\u2822',
+  'ุ': '\u2809',
+  'ู': '\u2812',
+  //"เอะ"
+  'เ': '\u280b',
+  //"แอะ"
+  'แ': '\u2823',
+  //"เอียะ",
+  //"เอีย",
+  //"เอือะ",
+  //"เอือ",
+  //"อัวะ",
+  //"อัว",
+  //"โอะ"
+  'โ': '\u280a',
+  //"เอาะ",
+  //"ออ",
+  //"เออะ",
+  //"เออ",
+  'ำ': '\u2835',
+  'ใ': '\u2831'+'\u2802',
+  'ไ': '\u2831',
+  'ฤ': '\u2817'+'\u2802',
+  'ๅ': '\u2821',
+  'ฦ': '\u2807'+'\u2802',
+  '็': '\u2804',
 };
 
 /*
 ่" ่"," ้"," ๊", ๋","ั"
 */
 
-const th_top_braille = {
-  '่': "A",
-  '้': "B",
-  '๊': "C",
-  '๋': "D",
-  'ั': "E",
-  '์': "F",
-  '็': "G",
+const th_tone_braille = {
+  '่': '\u2814',
+  '้': '\u2832',
+  '๊': '\u2856',
+  '๋': '\u2826',
+  '์': '\u2834',
 };
 
 /*
@@ -105,6 +139,13 @@ const number_brailler = {
   '๐': '0',
 };
 
+//todo:add compound vowel checking
+
+function th_compound_vowel_converter(input){
+  const stack = [];
+  return "";
+}
+
 function th_braillate(input) {
   let output = '';
 
@@ -115,8 +156,8 @@ function th_braillate(input) {
         lookupMap[currentChar] = th_consonant_braille[currentChar];
       } else if (currentChar in th_vowel_braille) {
         lookupMap[currentChar] = th_vowel_braille[currentChar];
-      } else if (currentChar in th_top_braille) {
-        lookupMap[currentChar] = th_top_braille[currentChar];
+      } else if (currentChar in th_tone_braille) {
+        lookupMap[currentChar] = th_tone_braille[currentChar];
       } else {
         lookupMap[currentChar] = "?";
       }
