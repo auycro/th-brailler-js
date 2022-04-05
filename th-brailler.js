@@ -1,10 +1,3 @@
-const lookupMap = {
-  ' ': "<br/>",
-  '\n': "<br/>",
-  '\r\n': "<br/>",
-  '\t': "<br/>",
-};
-
 /*
 "ก","ข","ฃ","ค","ฅ",
 "ฆ","ง","จ","ฉ","ช",
@@ -127,7 +120,7 @@ const th_tone_braille = {
 "๖","๗","๘","๙","๐",
 */
 
-const number_brailler = {
+const th_number_braille = {
   '๑': '1',
   '๒': '2',
   '๓': '3',

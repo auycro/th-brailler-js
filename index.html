@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script src="en-brailler.js"></script>
     <script src="th-brailler.js"></script>
+    <script src="main-brailler.js"></script>
     <style type="text/css">
       #output {
         margin: 10px 0 10px 0;
@@ -26,7 +28,7 @@
     </p>
 
     <textarea id="input" rows="15" cols="80" style="font-family: monospace;">
-อักษรเบรลล์ คือ อักษรที่ใช้ในระบบการเรียนการสอนสำหรับคนตาบอด ซึ่งเป็นการรวมกลุ่มของจุดนูนเขียนลงบนกระดาษ โดยใช้ปลายนิ้วมือสัมผัสในการอ่าน
+อักษรเบรลล์ คือ อักษรที่ใช้ในระบบการเรียนการสอนสำหรับคนตาบอด ซึ่งเป็นการรวมกลุ่มของจุดนูนเขียนลงบนกระดาษ โดยใช้ปลายนิ้วมือสัมผัสในการอ่าน&#10;thank you
 		</textarea>
     <br />
 
@@ -37,16 +39,16 @@
         'DOMContentLoaded',
         function () {
           var input = document.querySelector('#input'),
-            text2color = function (input) {
-              document.querySelector('#output').innerHTML = th_braillate(
+            text2braiile = function (input) {
+              document.querySelector('#output').innerHTML = braillate(
                 input.value
               );
             };
 
-          text2color(input);
+            text2braiile(input);
 
           input.onkeyup = function () {
-            text2color(input);
+            text2braiile(input);
           };
         },
         false
