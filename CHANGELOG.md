@@ -40,3 +40,4 @@ liblouis Thai test suite (`node test.js`, 67 cases).
 ### Changed
 - Single `braillate()` replaces three duplicated functions; dead stubs removed.
 - `braillate()` returns plain braille text; `braillateHtml()` for the demo page.
+

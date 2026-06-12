@@ -72,3 +72,5 @@ References
 * https://github.com/liblouis/liblouis (tables/th-g0.utb, tests/braille-specs/th.yaml)
 * https://en.wikipedia.org/wiki/Thai_and_Lao_Braille
 * http://doc2.clib.psu.ac.th/public13/thises/313218.pdf
+
+This repo is inspired by [chromaconator-js](https://github.com/marissamarym/chromaconator-js)

@@ -41,3 +41,4 @@ const QUOTE_CLOSE = dots('356');
 if (typeof module !== 'undefined') {
   module.exports = { dots, EN_LETTERS, DIGIT_CELLS, PUNCT, QUOTE_OPEN, QUOTE_CLOSE };
 }
+

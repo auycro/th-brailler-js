@@ -64,3 +64,4 @@ const TH_DIGIT_VALUE = Object.fromEntries(
 if (typeof module !== 'undefined') {
   module.exports = { TH_MAP, TH_MULTI, TH_DIGIT_VALUE };
 }
+

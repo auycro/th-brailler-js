@@ -75,3 +75,4 @@ function braillateHtml(text) {
 if (typeof module !== 'undefined') {
   module.exports = { braillate, braillateHtml };
 }
+

@@ -93,3 +93,4 @@ for (const [input, expected] of CASES) {
 }
 console.log(`${CASES.length - failed}/${CASES.length} passed`);
 process.exit(failed ? 1 : 0);
+

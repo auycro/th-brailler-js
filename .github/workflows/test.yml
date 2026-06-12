@@ -14,3 +14,4 @@ jobs:
           node-version: 20
       - name: Run golden tests
         run: node test.js
+
