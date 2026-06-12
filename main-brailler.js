@@ -1,39 +1,77 @@
-const lookupMap = {
-  ' ': "<br/>",
-  '\n': "<br/>",
-  '\r\n': "<br/>",
-  '\t': "<br/>",
-};
+/*
+ * main-brailler.js — Thai/English text to braille (grade 0, uncontracted).
+ *
+ * Translation logic only; the cell data lives in th-mapping.js and
+ * en-mapping.js. Load order in the browser:
+ *
+ *   <script src="en-mapping.js"></script>
+ *   <script src="th-mapping.js"></script>
+ *   <script src="main-brailler.js"></script>
+ *
+ * Rules implemented:
+ *  - Thai text is transliterated cell-by-cell in print order.
+ *  - Arabic digits:  number sign ⠼ before each digit run (1.5 → ⠼⠁⠲⠑).
+ *  - Thai digits:    ⠠⠼ before each digit run (๑๒ → ⠠⠼⠁⠃).
+ *  - English capitals: capital sign ⠠ before the letter (UEB grade 1).
+ *  - ฯลฯ is a single two-cell sign ⠰⠇.
+ */
 
-function numeric_converter(input){
-  const stack = [];
-  return "";
+// In Node (e.g. `node test.js`) load the mapping files here;
+// in the browser they are already loaded by the <script> tags above.
+if (typeof module !== 'undefined' && typeof require === 'function') {
+  Object.assign(globalThis, require('./en-mapping.js'), require('./th-mapping.js'));
 }
 
-function braillate(input) {
-  let output = '';
+const BLANK = dots('');        // ⠀ empty cell (space)
+const CAP_SIGN = dots('6');    // ⠠ capital sign / Thai-digit prefix
+const NUM_SIGN = dots('3456'); // ⠼ number sign
 
-  for (let i = 0; i < input.length; i++) {
-    const currentChar = input[i];
-    if (!(currentChar in lookupMap)) {
-      if (currentChar.toLowerCase() in lowercase_alphabet_braille) {
-        lookupMap[currentChar] = lowercase_alphabet_braille[currentChar.toLowerCase()];
-      } else if (currentChar in en_number_braille) {
-        lookupMap[currentChar] = en_number_braille[currentChar];
-      } else if (currentChar in th_number_braille) {
-        lookupMap[currentChar] = th_number_braille[currentChar];
-      } else if (currentChar in th_consonant_braille) {
-        lookupMap[currentChar] = th_consonant_braille[currentChar];
-      } else if (currentChar in th_vowel_braille) {
-        lookupMap[currentChar] = th_vowel_braille[currentChar];
-      } else if (currentChar in th_tone_braille) {
-        lookupMap[currentChar] = th_tone_braille[currentChar];
-      } else {
-        lookupMap[currentChar] = "?";
-      }
+// Translate text to braille. Newlines are preserved; spaces become blank cells.
+function braillate(text) {
+  let out = '';
+  let numberMode = null; // null | 'arabic' | 'thai'
+  let quoteOpen = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const multi = text.slice(i, i + 3);
+    if (multi in TH_MULTI) {
+      out += TH_MULTI[multi];
+      numberMode = null;
+      i += 2;
+      continue;
     }
-    output += lookupMap[currentChar];
-  }
 
-  return output;
+    const ch = text[i];
+    const isDigit = ch in DIGIT_CELLS || ch in TH_DIGIT_VALUE;
+
+    if (isDigit) {
+      const mode = ch in TH_DIGIT_VALUE ? 'thai' : 'arabic';
+      if (numberMode !== mode) out += (mode === 'thai' ? CAP_SIGN : '') + NUM_SIGN;
+      numberMode = mode;
+      out += DIGIT_CELLS[TH_DIGIT_VALUE[ch] || ch];
+      continue;
+    }
+
+    // A decimal point keeps number mode (1.5 → ⠼⠁⠲⠑); anything else ends it.
+    if (!(ch === '.' && numberMode && text[i + 1] in DIGIT_CELLS)) numberMode = null;
+
+    if (ch === '\r') continue;
+    if (ch === '\n') out += '\n';
+    else if (ch === ' ' || ch === '\t') out += BLANK;
+    else if (ch === '"') { out += quoteOpen ? QUOTE_CLOSE : QUOTE_OPEN; quoteOpen = !quoteOpen; }
+    else if (ch.toLowerCase() in EN_LETTERS) {
+      out += (ch === ch.toLowerCase() ? '' : CAP_SIGN) + EN_LETTERS[ch.toLowerCase()];
+    }
+    else out += TH_MAP[ch] || PUNCT[ch] || '?';
+  }
+  return out;
+}
+
+// HTML flavour for the demo page.
+function braillateHtml(text) {
+  return braillate(text).replace(/\n/g, '<br/>');
+}
+
+if (typeof module !== 'undefined') {
+  module.exports = { braillate, braillateHtml };
 }

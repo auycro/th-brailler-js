@@ -1,58 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="th">
   <head>
-    <script src="en-brailler.js"></script>
-    <script src="th-brailler.js"></script>
+    <meta charset="utf-8" />
+    <title>Thai Braille Converter Js</title>
+    <script src="en-mapping.js"></script>
+    <script src="th-mapping.js"></script>
     <script src="main-brailler.js"></script>
-    <style type="text/css">
-      #output {
-        margin: 10px 0 10px 0;
-      }
-
-      #output div {
-        float: left;
-        height: 20px;
-        width: 14px;
-        margin-bottom: 10px;
-      }
+    <style>
+      body { font-family: sans-serif; max-width: 720px; margin: 2em auto; }
+      textarea, #output { width: 100%; font-family: monospace; box-sizing: border-box; }
+      #output { margin: 10px 0; font-size: 1.6em; line-height: 1.4; word-break: break-all; }
     </style>
   </head>
   <body>
     <p>
-      <strong>Thai Braille Converter Js</strong> turn Thai characters into braille.<br />
+      <strong>Thai Braille Converter Js</strong> turns Thai and English characters into braille
+      (grade 0, uncontracted), following the official spec of the Foundation for the Blind in
+      Thailand.
     </p>
     <p>
-      Project page on
-      <a href="https://github.com/auycro/th-brailler-js">GitHub</a>. (help-wanted)<br /><br />
-      <small>※ This snippet is not 100% Thai braille syntax-correct. Please use with your caution.</small>
+      Project page on <a href="https://github.com/auycro/th-brailler-js">GitHub</a>.
     </p>
 
-    <textarea id="input" rows="15" cols="80" style="font-family: monospace;">
-อักษรเบรลล์ คือ อักษรที่ใช้ในระบบการเรียนการสอนสำหรับคนตาบอด ซึ่งเป็นการรวมกลุ่มของจุดนูนเขียนลงบนกระดาษ โดยใช้ปลายนิ้วมือสัมผัสในการอ่าน&#10;thank you
-		</textarea>
-    <br />
+    <textarea id="input" rows="10">อักษรเบรลล์ คือ อักษรที่ใช้ในระบบการเรียนการสอนสำหรับคนตาบอด ซึ่งเป็นการรวมกลุ่มของจุดนูนเขียนลงบนกระดาษ โดยใช้ปลายนิ้วมือสัมผัสในการอ่าน&#10;thank you</textarea>
 
     <div id="output"></div>
 
     <script>
-      addEventListener(
-        'DOMContentLoaded',
-        function () {
-          var input = document.querySelector('#input'),
-            text2braiile = function (input) {
-              document.querySelector('#output').innerHTML = braillate(
-                input.value
-              );
-            };
-
-            text2braiile(input);
-
-          input.onkeyup = function () {
-            text2braiile(input);
-          };
-        },
-        false
-      );
+      const input = document.querySelector('#input');
+      const output = document.querySelector('#output');
+      const render = () => { output.innerHTML = braillateHtml(input.value); };
+      input.addEventListener('input', render);
+      render();
     </script>
   </body>
 </html>
